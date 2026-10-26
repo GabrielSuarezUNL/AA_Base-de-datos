@@ -13,5 +13,59 @@ De los camiones que llevan los camioneros, interesa conocer la matrícula, model
 ![Diagrama Entidad-Relación del ejercicio 08](imagenes/ejercicio08.png)
 
 ---
+## Modelo Relacional 
+![Modelo Relacional](<modelo relacional/MODELO RELACIONAL 8.jpg>)
+
+---
+## Codigo MySQL
+```sql
+
+Create Table Provincia (
+    codigo Varchar(5) Primary Key,
+    nombre Varchar(60) Not Null
+);
+ 
+Create Table Camionero (
+    cedula    Varchar(10) Primary Key,
+    nombre    Varchar(100) Not Null,
+    telefono  Varchar(15),
+    direccion Varchar(150),
+    salario   Decimal(8,2) Not Null,
+    poblacion Varchar(60)
+);
+ 
+Create Table Paquete (
+    codigo                 Varchar(15) Primary Key,
+    descripcion            Varchar(200),
+    destinatario           Varchar(100) Not Null,
+    direccion_destinatario Varchar(150) Not Null,
+    codigo_provincia       Varchar(5)   Not Null,
+    cedula_camionero       Varchar(10)  Not Null,
+    Foreign Key (codigo_provincia) References Provincia (codigo),
+    Foreign Key (cedula_camionero) References Camionero (cedula)
+);
+ 
+Create Table Camion (
+    matricula Varchar(10) Primary Key,
+    modelo    Varchar(50),
+    tipo      Varchar(40),
+    potencia  Int
+);
+ 
+Create Table Conduce (
+    cedula    Varchar(10) Not Null,
+    matricula Varchar(10) Not Null,
+    fecha     Date Not Null,
+    Primary Key (cedula, matricula),
+    Foreign Key (cedula)    References Camionero (cedula),
+    Foreign Key (matricula) References Camion (matricula)
+);
+ 
+
+
+
+```
+
+---
 
 [Volver al índice de Modelos Entidad-Relación](README.md) · [Volver a Unidad 1](../README.md)
