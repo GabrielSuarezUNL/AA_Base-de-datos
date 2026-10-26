@@ -9,5 +9,57 @@ Se desea crear una aplicación para la gestión de una tienda informática. La t
 ![Diagrama Entidad-Relación del ejercicio 06](imagenes/ejercicio06.png)
 
 ---
+## Modelo Relacional 
+![Modelo Relacional](<modelo relacional/MODELO RELACIONAL 6.jpg>)
+
+---
+## Codigo MySQL
+```sql
+
+Create Table Cliente (
+    codigo    Int Primary Key,
+    nombre    Varchar(60) Not Null,
+    apellidos Varchar(80) Not Null,
+    direccion Varchar(150),
+    telefono  Varchar(15)
+);
+ 
+Create Table Producto (
+    codigo      Int Primary Key,
+    descripcion Varchar(200) Not Null,
+    precio      Decimal(10,2) Not Null,
+    existencias Int Not Null
+);
+ 
+Create Table Compra (
+    id_compra       Int Primary Key,
+    codigo_cliente  Int  Not Null,
+    codigo_producto Int  Not Null,
+    fecha           Date Not Null,
+    Foreign Key (codigo_cliente)  References Cliente (codigo),
+    Foreign Key (codigo_producto) References Producto (codigo)
+);
+ 
+Create Table Proveedor (
+    codigo    Int Primary Key,
+    nombres   Varchar(60) Not Null,
+    apellidos Varchar(80) Not Null,
+    direccion Varchar(150),
+    provincia Varchar(60),
+    telefono  Varchar(15)
+);
+ 
+Create Table Suministra (
+    codigo_producto  Int Not Null,
+    codigo_proveedor Int Not Null,
+    Primary Key (codigo_producto, codigo_proveedor),
+    Foreign Key (codigo_producto)  References Producto (codigo),
+    Foreign Key (codigo_proveedor) References Proveedor (codigo)
+);
+
+
+```
+
+---
 
 [Volver al índice de Modelos Entidad-Relación](README.md) · [Volver a Unidad 1](../README.md)
